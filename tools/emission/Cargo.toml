@@ -7,3 +7,7 @@ license = "MIT"
 
 [profile.test]
 opt-level = 3
+
+[[bin]]
+name = "zethora-emission"
+path = "main.rs"
