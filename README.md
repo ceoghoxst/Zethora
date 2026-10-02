@@ -1,4 +1,4 @@
-# Zethora
+# Zethora™
 
 **Fair money for people and machines.**
 
