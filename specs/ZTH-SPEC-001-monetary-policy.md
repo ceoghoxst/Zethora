@@ -45,7 +45,7 @@ Status labels: LOCKED, DRAFT, PROPOSED, FUTURE, OPEN.
 ## 3. Definitions (LOCKED)
 - **ZTHR:** the base asset of Zethora.
 - **Zet:** the smallest indivisible amount (like Bitcoin's "sat"). 1 Zethora = 10^10 zets. Plural: zets.
-- **Ticker:** ZTHR (LOCKED Oct 2, 2026; ZTHR avoided because Zenith Protocol uses it on exchanges). Recheck availability before launch.
+- **Ticker:** ZTHR (LOCKED Oct 2, 2026; ZTH avoided because Zenith Protocol uses it on exchanges). Recheck availability before launch.
 - **CAP_UNITS:** 100,000,000 x 10^10 = 10^18 units. Fits in a signed 64-bit integer (max ~9.22 x 10^18) with ~9x headroom.
 - **Genesis:** the first block. Contains 0 ZTHR.
 - **Emitted:** total units ever created by block rewards.
