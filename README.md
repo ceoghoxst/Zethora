@@ -30,7 +30,7 @@ Plus what none of them have built in:
 **Design stage. The Zethora network does not exist yet.**
 
 - Specifications: **Draft v0.1, open for public comment**
-- Code: not started
+- Code: first reference tool (emission schedule)
 - Testnet: not live
 - Mainnet: not live
 
