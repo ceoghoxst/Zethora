@@ -20,6 +20,7 @@ Status labels: LOCKED, DRAFT, PROPOSED, FUTURE, OPEN.
 | Release curve | Smooth decay, no halving cliffs |
 | Half mined | ~8 years |
 | 90% mined | ~27 years |
+| Never-mined reserve | **1,000 ZTHR** (guarantees the cap under BlockDAG parallelism) |
 | First block reward (at 1 block/sec) | ~0.2746 ZTHR |
 | Coins mined per day at launch | ~23,719 ZTHR |
 | After rewards fade | Miners paid by fees + protocol fee pool |
@@ -49,7 +50,8 @@ Status labels: LOCKED, DRAFT, PROPOSED, FUTURE, OPEN.
 - **CAP_UNITS:** 100,000,000 x 10^10 = 10^18 units. Fits in a signed 64-bit integer (max ~9.22 x 10^18) with ~9x headroom.
 - **Genesis:** the first block. Contains 0 ZTHR.
 - **Emitted:** total units ever created by block rewards.
-- **Remaining:** CAP_UNITS - Emitted.
+- **SUPPLY_RESERVE:** 1,000 ZTHR (10^13 units). Never mined. See 5.7.
+- **Remaining:** CAP_UNITS - SUPPLY_RESERVE - Emitted.
 - **Block reward:** new units paid to the miner of a block, per Section 5.
 - **Fees:** units paid by users for transactions and token creation.
 - **Fee pool:** a protocol-held balance, controlled by no key, defined in Section 8.
@@ -89,6 +91,8 @@ If SPEC-005 finalizes a different block rate before genesis, D is recalculated w
 5.4 **End state.** When Remaining < D, the reward rounds to 0 and emission ends. Up to D units (~0.036 ZTHR) are never emitted, so the cap is never exceeded.
 5.5 **No cliffs.** No halvings. The reward shrinks slightly every block (~8.3% per year).
 5.6 **Comparison.** Bitcoin: 50% mined in 4 years, ~90% in ~11. Zethora: 50% in 8, ~90% in ~27. The slower curve gives later participants worldwide a fairer share.
+
+5.7 **Never-mined reserve (LOCKED Oct 3, 2026).** Emission starts from CAP_UNITS - SUPPLY_RESERVE (99,999,000 ZTHR). In a BlockDAG, parallel blocks can share a DAA score and each earn that step's reward; the worst-case lifetime overshoot is about 10 ZTHR at 1 block/sec. The 1,000 ZTHR reserve covers this 100x, so total supply can never exceed 100,000,000 ZTHR. The index n in 5.1 is the block's DAA score.
 
 ## 6. Genesis (LOCKED)
 6.1 Genesis contains 0 ZTHR. The first coins are created by the miner of block 1.
@@ -171,6 +175,7 @@ No protocol treasury and no account holding funds for anyone's discretionary use
 5. Confirm block rate in SPEC-005 (D recalculated if not 1/sec).
 
 ## 18. Changelog
+- Oct 3, 2026: added 1,000 ZTHR never-mined reserve (5.7); reward index is the DAA score. First reward now 0.2745536136 ZTHR.
 - Oct 2, 2026: ticker ZTHR, smallest unit "zet".
 - Oct 2, 2026: LOCKED 100M cap, 10 decimals, smooth decay (8-year half-life), fee pool, no premine, no treasury, no tail emission.
 - Oct 1, 2026: renamed to Zethora; fair launch from zero confirmed.
