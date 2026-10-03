@@ -6,14 +6,19 @@
 pub const ZETS_PER_ZTHR: u64 = 10_000_000_000;
 /// Hard cap: 100,000,000 ZTHR = 10^18 zets (fits in i64 and u64).
 pub const CAP_UNITS: u64 = 100_000_000 * ZETS_PER_ZTHR;
+/// Never mined; guarantees the cap under BlockDAG parallelism (ZTH-SPEC-001 §5.7).
+pub const SUPPLY_RESERVE: u64 = 1_000 * ZETS_PER_ZTHR;
+/// Remaining supply at genesis.
+pub const EMISSION_START: u64 = CAP_UNITS - SUPPLY_RESERVE;
 /// Divisor at 1 block per second: round(8 years in seconds / ln 2).
 pub const D: u64 = 364_223_944;
 /// Blocks per year at 1 block per second (365.25 days).
 pub const BLOCKS_PER_YEAR: u64 = 31_557_600;
 
-/// Block reward given total emitted so far. reward = floor(Remaining / D).
+/// Block reward given total emitted so far. reward = floor(Remaining / D),
+/// Remaining = CAP_UNITS - SUPPLY_RESERVE - emitted.
 pub fn reward(emitted: u64) -> u64 {
-    let remaining = CAP_UNITS.checked_sub(emitted).expect("emitted exceeds cap");
+    let remaining = EMISSION_START.checked_sub(emitted).expect("emitted exceeds emission limit");
     remaining / D
 }
 
@@ -33,7 +38,7 @@ fn zthr(units: u64) -> f64 { units as f64 / ZETS_PER_ZTHR as f64 }
 
 fn main() {
     println!("Zethora emission schedule (ZTH-SPEC-001, 1 block/sec)");
-    println!("Cap: {} ZTHR | D = {}", CAP_UNITS / ZETS_PER_ZTHR, D);
+    println!("Cap: {} ZTHR | never-mined reserve: {} ZTHR | D = {}", CAP_UNITS / ZETS_PER_ZTHR, SUPPLY_RESERVE / ZETS_PER_ZTHR, D);
     println!("First block reward: {:.10} ZTHR\n", zthr(reward(0)));
     println!("{:>6} {:>18} {:>8} {:>16}", "Year", "Total mined", "% cap", "Reward/block");
     let mut emitted: u64 = 0;
@@ -77,9 +82,21 @@ mod tests {
 
     #[test]
     fn reward_never_exceeds_remaining() {
-        for e in [0, CAP_UNITS / 2, CAP_UNITS - D, CAP_UNITS - 1, CAP_UNITS] {
-            assert!(reward(e) <= CAP_UNITS - e);
+        for e in [0, EMISSION_START / 2, EMISSION_START - D, EMISSION_START - 1, EMISSION_START] {
+            assert!(reward(e) <= EMISSION_START - e);
         }
-        assert_eq!(reward(CAP_UNITS - D + 1), 0, "emission ends when Remaining < D");
+        assert_eq!(reward(EMISSION_START - D + 1), 0, "emission ends when Remaining < D");
+    }
+
+    #[test]
+    fn first_reward_matches_node() {
+        // Same value as the zethora-node consensus code.
+        assert_eq!(reward(0), 2_745_536_136);
+    }
+
+    #[test]
+    fn reserve_is_1000_zthr_and_never_mined() {
+        assert_eq!(EMISSION_START + SUPPLY_RESERVE, CAP_UNITS);
+        assert_eq!(SUPPLY_RESERVE, 1_000 * ZETS_PER_ZTHR);
     }
 }
