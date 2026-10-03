@@ -27,12 +27,25 @@ Plus what none of them have built in:
 
 ## Status
 
-**Design stage. The Zethora network does not exist yet.**
+**Prototype stage. A private Zethora devnet is running on a home PC. There is no public network yet.**
 
 - Specifications: **Draft v0.1, open for public comment**
-- Code: first reference tool (emission schedule)
-- Testnet: not live
+- Prototype node: **running** ([zethora-node](https://github.com/ceoghoxst/zethora-node), forked from Kaspa's open-source BlockDAG node)
+- Public testnet: not live
 - Mainnet: not live
+
+What already works on the private devnet:
+
+| | |
+|---|---|
+| Supply rule | 100M cap, smooth decay, 1,000 ZTHR never-mined reserve |
+| Genesis | 0 coins, "Wake Up From The Dream World" |
+| Mining | RandomX (home-CPU proof of work), ~1 block per second |
+| Fees | Tips to miners; base fees 60% to the miner fee pool, 40% burned, enforced by consensus |
+| Verification | Independent nodes re-check and agree on every block |
+| Addresses | `zethora:` format |
+
+Not built yet: privacy, wallet app, recovery and inheritance, smart contracts and tokens, RandomX key rotation.
 
 There is **no Zethora token today.** Anything claiming to be one is not Zethora.
 The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
@@ -68,6 +81,8 @@ The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
 
 - **[Lightpaper v0.2](./Zethora_Lightpaper_v0.2.pdf)**: the overview
 - **[Specifications](./specs/)**: the full rules
+- **[Reference tools](./tools/)**: tested supply and fee calculations
+- **[zethora-node](https://github.com/ceoghoxst/zethora-node)**: the prototype node (Rust)
 
 | Spec | Topic |
 |---|---|
@@ -88,8 +103,8 @@ The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
 
 ## Roadmap
 
-1. **Specification**: in progress (you are here)
-2. **Prototype**: first working node
+1. **Specification**: draft v0.1 published
+2. **Prototype**: working devnet node (you are here)
 3. **Public testnet**: minimum six months, open to all
 4. **Mainnet**: only when every launch gate passes
 5. **Ecosystem**: apps, launchpad, AI compute marketplace, devices
