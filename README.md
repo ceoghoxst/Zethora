@@ -43,9 +43,13 @@ What already works on the private devnet:
 | Mining | RandomX (home-CPU proof of work), ~1 block per second |
 | Fees | Tips to miners; base fees 60% to the miner fee pool, 40% burned, enforced by consensus |
 | Verification | Independent nodes re-check and agree on every block |
+| Supply check | Every block proves visible coins + fee pool + burned + private pool = coins issued. A block that is off by even 1 zet is rejected |
+| Attack test | A money-printing bug was planted on purpose; the node refused to continue and no fake coin entered the chain |
 | Addresses | `zethora:` format |
 
-Not built yet: privacy, wallet app, recovery and inheritance, smart contracts and tokens, RandomX key rotation.
+Privacy design: chosen and specified (Orchard / Halo 2, no trusted setup; see [ZTH-SPEC-006](./specs/ZTH-SPEC-006-privacy.md)). The private pool's public balance (turnstile) is already enforced; private transactions themselves are not built yet.
+
+Not built yet: private transactions, wallet app, recovery and inheritance, smart contracts and tokens, RandomX key rotation.
 
 There is **no Zethora token today.** Anything claiming to be one is not Zethora.
 The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
