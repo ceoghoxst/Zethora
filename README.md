@@ -8,20 +8,27 @@ Bitcoin left your home. Zethora brings it back.
 
 ## What Zethora is
 
-Zethora is a proposed Layer-1 blockchain that brings together four properties no single network has combined:
+Zethora is a proposed Layer-1 blockchain that combines three working properties no single network has brought together — plus privacy, currently under review:
 
 | | Inspired by | In Zethora |
 |---|---|---|
 | **Scarcity** | Bitcoin | 100,000,000 ZTHR, ever. Every coin mined. No premine. |
-| **Speed** | Solana | ~1 block per second (BlockDAG). Everyday payments safe in ~10 seconds. |
-| **Programmability** | Ethereum | Safe object-based smart contracts. Anyone can create tokens. |
-| **Privacy** | Monero / Zcash | Private by default. Supply always provable. |
+| **Speed** | Kaspa / Solana | ~1 block per second (BlockDAG). Everyday payments safe in ~10 seconds. |
+| **Home mining** | Monero | CPU-friendly proof-of-work (RandomZ). No warehouses, no special chips. |
+| **Privacy** | Zcash | Private by default. Integrated (Orchard 0.16.0). Disabled on public networks until an independent cryptographic review is complete. |
 
 Plus what none of them have built in:
 
-- **Home-computer mining.** CPU-friendly proof-of-work. No warehouses, no special chips.
-- **Coins you can't lose.** Built-in recovery and inheritance.
-- **Wallets for machines.** Cars, robots and AI agents can hold funds under rules their owner sets.
+- **Coins you can't lose.** Built-in recovery and inheritance (planned).
+- **Wallets for machines.** Cars, robots and AI agents can hold funds under rules their owner sets (planned).
+
+### Programmability — planned research, not a current feature
+
+Zethora does **not** currently support smart contracts. The `simpa` crate in the node repository is a Kaspa network simulator inherited with the fork; it is not a virtual machine.
+
+If programmability is added in the future, the design direction is an object-model language in the Move family (as used by Sui and Aptos). This would require a formal VM specification, independent cryptographic review, wallet tooling, and a dedicated engineering team funded over multiple years.
+
+It is not promised for testnet. It is not promised for mainnet. It may not ship at all.
 
 ---
 
@@ -40,16 +47,16 @@ What already works on the private devnet:
 |---|---|
 | Supply rule | 100M cap, smooth decay, 1,000 ZTHR never-mined reserve |
 | Genesis | 0 coins, "Wake Up From The Dream World" |
-| Mining | RandomX (home-CPU proof of work), ~1 block per second |
+| Mining | RandomZ (home-CPU proof of work), ~1 block per second |
 | Fees | Tips to miners; base fees 60% to the miner fee pool, 40% burned, enforced by consensus |
 | Verification | Independent nodes re-check and agree on every block |
 | Supply check | Every block proves visible coins + fee pool + burned + private pool = coins issued. A block that is off by even 1 zet is rejected |
 | Attack test | A money-printing bug was planted on purpose; the node refused to continue and no fake coin entered the chain |
 | Addresses | `zethora:` format |
 
-Privacy design: chosen and specified (Orchard / Halo 2, no trusted setup; see [ZTH-SPEC-006](./specs/ZTH-SPEC-006-privacy.md)). The private pool's public balance (turnstile) is already enforced; private transactions themselves are not built yet.
+Privacy design: chosen and specified (Orchard / Halo 2, no trusted setup; see [ZTH-SPEC-006](./specs/ZTH-SPEC-006-privacy.md)). The private pool's public balance (turnstile) is already enforced; private transactions themselves are disabled on testnet and mainnet pending an independent cryptographic review.
 
-Not built yet: private transactions, wallet app, recovery and inheritance, smart contracts and tokens, RandomX key rotation.
+Not built yet: private transactions on public networks, wallet app, recovery and inheritance, smart contracts and tokens, RandomX key rotation.
 
 There is **no Zethora token today.** Anything claiming to be one is not Zethora.
 The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
@@ -83,25 +90,25 @@ The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
 
 ## Documents
 
-- **[Lightpaper v0.2](./Zethora_Lightpaper_v0.2.pdf)**: the overview
+- **[Lightpaper v0.3](./Zethora_Lightpaper_v0.3.md)**: the overview
 - **[Specifications](./specs/)**: the full rules
 - **[Reference tools](./tools/)**: tested supply and fee calculations
 - **[zethora-node](https://github.com/ceoghoxst/zethora-node)**: the prototype node (Rust)
 
-| Spec | Topic |
-|---|---|
-| [000](./specs/ZTH-SPEC-000-foundation.md) | Foundation |
-| [001](./specs/ZTH-SPEC-001-monetary-policy.md) | Monetary policy |
-| [002](./specs/ZTH-SPEC-002-execution.md) | Execution / programmability |
-| [003](./specs/ZTH-SPEC-003-tokens.md) | Tokens and launchpad standards |
-| [005](./specs/ZTH-SPEC-005-consensus-speed.md) | Consensus, mining and speed |
-| [006](./specs/ZTH-SPEC-006-privacy.md) | Privacy and provable supply |
-| [008](./specs/ZTH-SPEC-008-fees.md) | Fees, fee pool and burn |
-| [009](./specs/ZTH-SPEC-009-nodes-network.md) | Nodes and network |
-| [010](./specs/ZTH-SPEC-010-wallets.md) | Wallets, recovery and inheritance |
-| [011](./specs/ZTH-SPEC-011-upgrades.md) | Upgrades and governance |
-| [012](./specs/ZTH-SPEC-012-security.md) | Security and launch gates |
-| [013](./specs/ZTH-SPEC-013-genesis-launch.md) | Genesis and launch |
+| Spec | Topic | Status |
+|---|---|---|
+| [000](./specs/ZTH-SPEC-000-foundation.md) | Foundation | Active |
+| [001](./specs/ZTH-SPEC-001-monetary-policy.md) | Monetary policy | Active |
+| [002](./specs/ZTH-SPEC-002-execution.md) | Execution / programmability | **Planned, not implemented** |
+| [003](./specs/ZTH-SPEC-003-tokens.md) | Tokens and launchpad standards | **Planned, not implemented** |
+| [005](./specs/ZTH-SPEC-005-consensus-speed.md) | Consensus, mining and speed | Active |
+| [006](./specs/ZTH-SPEC-006-privacy.md) | Privacy and provable supply | Active |
+| [008](./specs/ZTH-SPEC-008-fees.md) | Fees, fee pool and burn | Active |
+| [009](./specs/ZTH-SPEC-009-nodes-network.md) | Nodes and network | Active |
+| [010](./specs/ZTH-SPEC-010-wallets.md) | Wallets, recovery and inheritance | Active |
+| [011](./specs/ZTH-SPEC-011-upgrades.md) | Upgrades and governance | Active |
+| [012](./specs/ZTH-SPEC-012-security.md) | Security and launch gates | Active |
+| [013](./specs/ZTH-SPEC-013-genesis-launch.md) | Genesis and launch | Active |
 
 ---
 
@@ -111,7 +118,8 @@ The $ZERO token on pump.fun is **not part of Zethora** and will not migrate.
 2. **Prototype**: working devnet node (you are here)
 3. **Public testnet**: minimum six months, open to all
 4. **Mainnet**: only when every launch gate passes
-5. **Ecosystem**: apps, launchpad, AI compute marketplace, devices
+5. **Ecosystem**: apps, tools
+6. **Research**: programmability, if pursued
 
 ---
 
